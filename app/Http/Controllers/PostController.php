@@ -11,14 +11,15 @@ class PostController extends Controller
     {
         // $post = Post::find(1);
         // dd($post->title);
-        // $posts = Post::all();
         // $posts = Post::withTrashed()->where('is_published', 1)->get(); // поиск включая мягкоудаленные данные
-        $posts = Post::where('is_published', 1)->get();
-        foreach ($posts as $post) {
-            dump($post->title);
-        }
+        // $posts = Post::where('is_published', 1)->get();
+        // foreach ($posts as $post) {
+        //     dump($post->title);
+        // }
 
-        dd('end');
+        $posts = Post::all();
+
+        return view('posts', compact('posts'));
     }
 
     public function create()
