@@ -64,4 +64,29 @@ class PostController extends Controller
         $post->delete();
         dd('post was deleted');
     }
+
+    //возвращает найденную запись, или создает новую
+    public function firstOrCreate()
+    {
+        $post = Post::firstOrCreate([
+            'title' => 'Rome 1',
+        ], [
+            'content' => 'update content',
+            'image' => 'Rome.png',
+            'likes' => 0,
+        ]);
+        dd($post);
+    }
+
+    //обновляет найденную запись, или создает новую
+    public function updateOrCreate()
+    {
+        $post = Post::updateOrCreate([
+            'title' => 'Rome',
+        ], [
+            'content' => 'updateOrCreate content',
+            'image' => 'updateOrCreate.png',
+        ]);
+        dd($post);
+    }
 }
