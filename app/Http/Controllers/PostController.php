@@ -19,44 +19,48 @@ class PostController extends Controller
 
         $posts = Post::all();
 
-        return view('posts', compact('posts'));
+        return view('post.index', compact('posts'));
     }
 
     public function create()
     {
-        $postsArr = [
-            [
-                'title' => 'Rome',
-                'content' => 'gbfgl,bl content',
-                'image' => 'image-1.png',
-                'likes' => 8,
-                'is_published' => 1,
-            ],
-            [
-                'title' => 'New title',
-                'content' => 'New content',
-                'image' => 'image-2.png',
-                'likes' => 20,
-                'is_published' => 1,
-            ]
-        ];
-
-        foreach ($postsArr as $item) {
-            dump($item);
-            Post::create($item);
-        }
-
-        dd('created');
+        return view('post.create');
     }
 
-    public function update()
+    public function store()
     {
-        $post = Post::find(8);
-        $post->update([
-            'title' => 'updated title',
-            'content' => 'updated content'
+        $data = request()->validate([
+            'title' => 'string',
+            'content' => 'string',
+            'image' => 'string',
         ]);
-        dd($post);
+
+        Post::create($data);
+        return redirect()->route('post.index');
+    }
+
+    public function show(Post $post)
+    {
+        return view('post.show', compact('post'));
+    }
+
+    public function edit(Post $post)
+    {
+        // dd($post->id);
+        return view('post.edit', compact('post'));
+    }
+
+
+    public function update(Post $post)
+    {
+        $data = request()->validate([
+            'title' => 'string',
+            'content' => 'string',
+            'image' => 'string',
+        ]);
+
+        $post->update($data);
+        return redirect()->route('post.show', $post->id);
     }
 
     public function delete()
@@ -64,6 +68,12 @@ class PostController extends Controller
         $post = Post::find(3);
         $post->delete();
         dd('post was deleted');
+    }
+
+    public function destroy(Post $post)
+    {
+        $post->delete();
+        return redirect()->route('post.index');
     }
 
     //возвращает найденную запись, или создает новую
