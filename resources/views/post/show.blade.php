@@ -6,6 +6,7 @@
 <div>content: {{$post->content}}</div>  
 <div>image: {{$post->image}}</div> 
 <div>likes: {{$post->likes}}</div>
+<div>category: {{$post->category_id}}</div>
 <br>
 <div><a href="{{route('post.edit', $post->id)}}"><strong>Edit post</strong></a></div>
 <form action="{{route('post.delete', $post->id)}}" method="POST">

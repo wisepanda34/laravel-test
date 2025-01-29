@@ -19,11 +19,11 @@ class PostController extends Controller
         // $posts = $category->posts;
         // dd($posts);
 
-        // $post = Post::find(4);
+        // $post = Post::find(4); //получение всех тегов, которые имеет данный пост
         // dd($post->tags);
 
-        $tag = Tag::find(1);
-        dd($tag->posts);
+        // $tag = Tag::find(1); //получение всех постов, которые использует данный тег
+        // dd($tag->posts);
 
         // dd($post->title);
         // $posts = Post::withTrashed()->where('is_published', 1)->get(); // поиск включая мягкоудаленные данные
@@ -38,7 +38,8 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('post.create');
+        $categories = Category::all();
+        return view('post.create', compact('categories'));
     }
 
     public function store()
@@ -47,6 +48,7 @@ class PostController extends Controller
             'title' => 'string',
             'content' => 'string',
             'image' => 'string',
+            'category_id' => ''
         ]);
 
         Post::create($data);
@@ -60,8 +62,9 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
-        // dd($post->id);
-        return view('post.edit', compact('post'));
+        $categories = Category::all();
+
+        return view('post.edit', compact('post'), compact('categories'));
     }
 
 
@@ -71,6 +74,7 @@ class PostController extends Controller
             'title' => 'string',
             'content' => 'string',
             'image' => 'string',
+            'category_id' => ''
         ]);
 
         $post->update($data);
