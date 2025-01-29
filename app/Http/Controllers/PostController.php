@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\Tag;
 
 class PostController extends Controller
 {
@@ -17,6 +18,12 @@ class PostController extends Controller
         // $category = Category::find(1);
         // $posts = $category->posts;
         // dd($posts);
+
+        // $post = Post::find(4);
+        // dd($post->tags);
+
+        $tag = Tag::find(1);
+        dd($tag->posts);
 
         // dd($post->title);
         // $posts = Post::withTrashed()->where('is_published', 1)->get(); // поиск включая мягкоудаленные данные
