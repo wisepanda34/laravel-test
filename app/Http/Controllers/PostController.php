@@ -4,12 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Category;
 
 class PostController extends Controller
 {
     public function index()
     {
-        // $post = Post::find(1);
+        // $post = Post::find(2);
+        // $category = $post->category;
+        // dd($category->title);
+
+        // $category = Category::find(1);
+        // $posts = $category->posts;
+        // dd($posts);
+
         // dd($post->title);
         // $posts = Post::withTrashed()->where('is_published', 1)->get(); // поиск включая мягкоудаленные данные
         // $posts = Post::where('is_published', 1)->get();
@@ -18,7 +26,6 @@ class PostController extends Controller
         // }
 
         $posts = Post::all();
-
         return view('post.index', compact('posts'));
     }
 

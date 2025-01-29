@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->text('description')->nullable()->after('content');
+            $table->unsignedBigInteger('category_id')->nullable()->after('is_published');
+            $table->index('category_id', 'post_category_idx');
+            $table->foreign('category_id', 'post_category_fk')->on('categories')->references('id');
         });
     }
 
@@ -22,7 +24,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->dropColumn('description');
+            $table->dropForeign('post_category_fk');
+            $table->dropIndex('post_category_idx');
+            $table->dropColumn('category_id');
         });
     }
 };
