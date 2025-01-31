@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\Tag;
+use App\Models\PostTag;
 
 class PostController extends Controller
 {
@@ -39,19 +40,32 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('post.create', compact('categories'));
+        $tags = Tag::all();
+        return view('post.create', compact('categories', 'tags'));
     }
 
     public function store()
     {
         $data = request()->validate([
-            'title' => 'string',
-            'content' => 'string',
-            'image' => 'string',
-            'category_id' => ''
+            'title' => 'required | string | min:4 | max:6',
+            'content' => 'required | string | max:255',
+            'image' => 'string | min:4 | max:25',
+            'category_id' => '',
+            'tags' => ''
         ]);
+        $tags = $data['tags'];
+        unset($data['tags']);
 
-        Post::create($data);
+        // $post = Post::create($data);
+        // foreach ($tags as $tag) {        //создание записей в промежуточной таблице с created_at
+        //     PostTag::firstOrCreate([
+        //         'tag_id' => $tag,
+        //         'post_id' => $post->id
+        //     ]);
+        // }
+
+        $post = Post::create($data);
+        $post->tags()->attach($tags); //создаются записи в промежуточной таблице, которые связывают текущую модель с указанными связанными моделями.
         return redirect()->route('post.index');
     }
 
@@ -63,21 +77,26 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('post.edit', compact('post'), compact('categories'));
+        return view('post.edit', compact('post', 'categories', 'tags'));
     }
 
 
     public function update(Post $post)
     {
         $data = request()->validate([
-            'title' => 'string',
-            'content' => 'string',
-            'image' => 'string',
-            'category_id' => ''
-        ]);
+            'title' => 'required | string | min:4 | max:6',
+            'content' => 'required | string | max:255',
+            'image' => 'string | min:4 | max:25',
+            'category_id' => '',
+            'tags' => ''
 
+        ]);
+        $tags = $data['tags'];
+        unset($data['tags']);
         $post->update($data);
+        $post->tags()->sync($tags);
         return redirect()->route('post.show', $post->id);
     }
 
