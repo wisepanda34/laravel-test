@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\LaptopController;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\HomeController;
@@ -27,6 +28,17 @@ Route::get('/cars/{car}',  [CarController::class, 'show'])->name('cars.show');
 Route::get('/cars/{car}/edit',  [CarController::class, 'edit'])->name('cars.edit');
 Route::patch('/cars/{car}',  [CarController::class, 'update'])->name('cars.update');
 Route::delete('/cars/{car}',  [CarController::class, 'destroy'])->name('cars.delete');
+
+Route::get('/laptops/trashed', [LaptopController::class, 'trashed'])->name('laptops.trashed');
+Route::get('/laptops',  [LaptopController::class, 'index'])->name('laptops.index');
+Route::get('/laptops/create',  [LaptopController::class, 'create'])->name('laptops.create');
+Route::post('/laptops',  [LaptopController::class, 'store'])->name('laptops.store');
+Route::get('/laptops/{laptop}',  [LaptopController::class, 'show'])->name('laptops.show');
+Route::get('/laptops/{laptop}/edit',  [LaptopController::class, 'edit'])->name('laptops.edit');
+Route::patch('/laptops/{laptop}',  [LaptopController::class, 'update'])->name('laptops.update');
+Route::delete('/laptops/{laptop}',  [LaptopController::class, 'destroy'])->name('laptops.delete');
+Route::patch('/laptops/{id}/restore', [LaptopController::class, 'restore'])->name('laptops.restore');
+
 
 
 
