@@ -29,7 +29,7 @@
                 <a class="nav-link" href="{{route('about.index')}}">About</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{route('contact.index')}}">Contacts</a>
+                <a class="nav-link" href="{{route('teams.index')}}">Teams</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{{route('post.index')}}">Posts</a>

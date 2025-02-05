@@ -46,7 +46,6 @@ class LaptopController extends Controller
         return redirect()->route('laptops.index')->with('success', 'Laptop added successfully!');
     }
 
-
     public function show(Laptop $laptop)
     {
         $laptop->load('proccesor', 'specialties');
