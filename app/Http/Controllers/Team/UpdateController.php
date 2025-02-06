@@ -6,19 +6,14 @@ use App\Models\Team;
 use App\Models\Country;
 use App\Models\Achievement;
 use Illuminate\Http\Request;
+use App\Http\Requests\Post\UpdateRequest;
 use App\Http\Controllers\Controller;
 
 class UpdateController extends Controller
 {
-    public function __invoke(Request $request, Team $team)
+    public function __invoke(UpdateRequest $request, Team $team)
     {
-        // dd($request, $team);
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'country_id' => 'required|exists:countries,id', // Проверка на существование 
-            'achievement' => 'array',
-            'achievements.*' => 'exists:achievements,id', // Каждое значение должно существовать в БД
-        ]);
+        $validated = $request->validate(); // в классе UpdateRequest прописано правило для валидации 
 
         $team->update([
             'title' => $validated['title'],
