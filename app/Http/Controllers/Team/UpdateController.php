@@ -12,6 +12,7 @@ class UpdateController extends Controller
 {
     public function __invoke(Request $request, Team $team)
     {
+        // dd($request, $team);
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'country_id' => 'required|exists:countries,id', // Проверка на существование 

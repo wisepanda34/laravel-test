@@ -34,7 +34,7 @@
                   type="checkbox" 
                   id="achievement_{{ $achievement->id }}" 
                   value="{{ $achievement->id }}" 
-                  name="specialties[]" 
+                  name="achievements[]" 
                   {{ $team->achievements->contains($achievement->id) ? 'checked' : '' }}
                 >
                 <label class="form-check-label" for="achievement_{{ $achievement->id }}">
