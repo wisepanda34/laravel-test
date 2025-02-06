@@ -12,28 +12,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        // $post = Post::find(2);
-        // $category = $post->category;
-        // dd($category->title);
-
-        // $category = Category::find(1);
-        // $posts = $category->posts;
-        // dd($posts);
-
-        // $post = Post::find(4); //получение всех тегов, которые имеет данный пост
-        // dd($post->tags);
-
-        // $tag = Tag::find(1); //получение всех постов, которые использует данный тег
-        // dd($tag->posts);
-
-        // dd($post->title);
-        // $posts = Post::withTrashed()->where('is_published', 1)->get(); // поиск включая мягкоудаленные данные
-        // $posts = Post::where('is_published', 1)->get();
-        // foreach ($posts as $post) {
-        //     dump($post->title);
-        // }
-
-        $posts = Post::all();
+        $posts = Post::withTrashed()->get();
         return view('post.index', compact('posts'));
     }
 
@@ -50,29 +29,29 @@ class PostController extends Controller
             'title' => 'required | string | min:4 | max:6',
             'content' => 'required | string | max:255',
             'image' => 'string | min:4 | max:25',
-            'category_id' => '',
-            'tags' => ''
+            'category_id' => 'nullable|integer',
+            'tags' => 'array',
+            'tags.*' => 'integer|exists:tags,id'
         ]);
-        $tags = $data['tags'];
+        $tags = $data['tags'] ?? [];
         unset($data['tags']);
-
-        // $post = Post::create($data);
-        // foreach ($tags as $tag) {        //создание записей в промежуточной таблице с created_at
-        //     PostTag::firstOrCreate([
-        //         'tag_id' => $tag,
-        //         'post_id' => $post->id
-        //     ]);
-        // }
 
         $post = Post::create($data);
         $post->tags()->attach($tags); //создаются записи в промежуточной таблице, которые связывают текущую модель с указанными связанными моделями.
         return redirect()->route('post.index');
     }
 
-    public function show(Post $post)
+    // public function show(Post $post)
+    // {
+    //     $post = Post::withTrashed()->findOrFail($post->id);
+    //     return view('post.show', compact('post'));
+    // }
+    public function show($id)
     {
+        $post = Post::withoutGlobalScope('Illuminate\Database\Eloquent\SoftDeletingScope')->findOrFail($id);
         return view('post.show', compact('post'));
     }
+
 
     public function edit(Post $post)
     {
@@ -107,10 +86,19 @@ class PostController extends Controller
         dd('post was deleted');
     }
 
-    public function destroy(Post $post)
+    // public function destroy(Post $post)
+    // {
+    //     $post->tags()->detach();
+    //     $post->forceDelete();
+    //     return redirect()->route('post.index')->with('success', 'Пост удален окончательно.');
+    // }
+    public function destroy($id)
     {
-        $post->delete();
-        return redirect()->route('post.index');
+        $post = Post::withTrashed()->findOrFail($id); // ⚡ Теперь находит даже удаленные посты
+        $post->tags()->detach();
+        $post->forceDelete();
+
+        return redirect()->route('post.index')->with('success', 'Пост удален окончательно.');
     }
 
     //возвращает найденную запись, или создает новую
