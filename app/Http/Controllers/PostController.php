@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Post\FilterRequest;
+use App\Http\Requests\Post\UpdateRequest;
 use App\Http\Filters\PostFilter;
 use Illuminate\Http\Request;
 use App\Models\Post;
@@ -12,19 +13,18 @@ use App\Models\PostTag;
 
 class PostController extends Controller
 {
+
     public function index(FilterRequest $request)
     {
-
         $data = $request->validated();
         $filter = app()->make(PostFilter::class, ['queryParams' => array_filter($data)]);
-        // dd($filter);
+
         $posts = Post::filter($filter)->paginate(10);
+        $categories = Category::all(); // Получаем все категории
 
-
-        // dd($posts);
-        // $posts = Post::paginate(10);
-        return view('post.index', compact('posts'));
+        return view('post.index', compact('posts', 'categories'));
     }
+
 
     public function create()
     {
@@ -51,16 +51,16 @@ class PostController extends Controller
         return redirect()->route('post.index');
     }
 
-    // public function show(Post $post)
-    // {
-    //     $post = Post::withTrashed()->findOrFail($post->id);
-    //     return view('post.show', compact('post'));
-    // }
-    public function show($id)
+    public function show(Post $post)
     {
-        $post = Post::withoutGlobalScope('Illuminate\Database\Eloquent\SoftDeletingScope')->findOrFail($id);
+        $post = Post::withTrashed()->findOrFail($post->id);
         return view('post.show', compact('post'));
     }
+    // public function show($id)
+    // {
+    //     $post = Post::withoutGlobalScope('Illuminate\Database\Eloquent\SoftDeletingScope')->findOrFail($id);
+    //     return view('post.show', compact('post'));
+    // }
 
 
     public function edit(Post $post)
@@ -72,20 +72,16 @@ class PostController extends Controller
     }
 
 
-    public function update(Post $post)
+    public function update(UpdateRequest $request, Post $post)
     {
-        $data = request()->validate([
-            'title' => 'required | string | min:4 | max:6',
-            'content' => 'required | string | max:255',
-            'image' => 'string | min:4 | max:25',
-            'category_id' => '',
-            'tags' => ''
+        $data = $request->validated();
 
-        ]);
-        $tags = $data['tags'];
+        $tags = $data['tags'] ?? [];
         unset($data['tags']);
+
         $post->update($data);
         $post->tags()->sync($tags);
+
         return redirect()->route('post.show', $post->id);
     }
 
@@ -96,20 +92,20 @@ class PostController extends Controller
         dd('post was deleted');
     }
 
-    // public function destroy(Post $post)
-    // {
-    //     $post->tags()->detach();
-    //     $post->forceDelete();
-    //     return redirect()->route('post.index')->with('success', 'Пост удален окончательно.');
-    // }
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        $post = Post::withTrashed()->findOrFail($id); // ⚡ Теперь находит даже удаленные посты
         $post->tags()->detach();
         $post->forceDelete();
-
         return redirect()->route('post.index')->with('success', 'Пост удален окончательно.');
     }
+    // public function destroy($id)
+    // {
+    //     $post = Post::withTrashed()->findOrFail($id); // ⚡ Теперь находит даже удаленные посты
+    //     $post->tags()->detach();
+    //     $post->forceDelete();
+
+    //     return redirect()->route('post.index')->with('success', 'Пост удален окончательно.');
+    // }
 
     //возвращает найденную запись, или создает новую
     public function firstOrCreate()

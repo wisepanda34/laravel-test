@@ -23,8 +23,13 @@ class UpdateRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'country_id' => 'required|exists:countries,id',
-            'achievement' => 'array',
+            'content' => 'required|string',
+            'description' => 'nullable|string',
+            'image' => 'nullable|string|max:255',
+            'likes' => 'nullable|integer|min:0',
+            'is_published' => 'boolean',
+            'category_id' => 'required|exists:categories,id',
+            'achievements' => 'array',
             'achievements.*' => 'exists:achievements,id',
         ];
     }

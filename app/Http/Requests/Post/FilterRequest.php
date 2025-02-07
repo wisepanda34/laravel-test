@@ -23,13 +23,9 @@ class FilterRequest extends FormRequest
     {
         return [
             'title' => 'nullable|string|max:255',
-            'content' => 'nullable|string',
-            'description' => 'nullable|string|max:255',
-            'image' => 'nullable|string|max:255',
-            'likes' => 'nullable|integer|min:0',
             'category_id' => 'nullable|exists:categories,id',
-            'tags' => 'nullable|array',
-            'tags.*' => 'nullable|exists:tags,id',
+            'sort_by' => 'nullable|string|in:title,updated_at',
+            'sort_order' => 'nullable|string|in:asc,desc',
         ];
     }
 }
