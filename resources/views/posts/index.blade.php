@@ -4,7 +4,7 @@
 <h1 class="mb-4">Posts</h1>
 
 <!-- Форма для фильтрации -->
-<form method="GET" action="{{ route('post.index') }}" class="mb-3">
+<form method="GET" action="{{ route('posts.index') }}" class="mb-3">
     <div class="row">
         <!-- Фильтр по названию -->
         <div class="col-md-4">
@@ -25,7 +25,7 @@
 
         <div class="col-md-4">
             <button type="submit" class="btn btn-primary">Filter</button>
-            <a href="{{ route('post.index') }}" class="btn btn-secondary">Reset</a>
+            <a href="{{ route('posts.index') }}" class="btn btn-secondary">Reset</a>
         </div>
     </div>
 </form>
@@ -41,7 +41,7 @@
 
 <!-- Список постов -->
 @foreach($posts as $post)
-  <div><a href="{{ route('post.show', $post->id) }}">{{ $post->id }} | {{ $post->title }} </a></div>
+  <div><a href="{{ route('posts.show', $post->id) }}">{{ $post->id }} | {{ $post->title }} </a></div>
 @endforeach
 
 <!-- Пагинация -->
@@ -51,7 +51,7 @@
 
 <!-- Кнопка добавления поста -->
 <div>
-  <a href="{{ route('post.create') }}" class="btn btn-primary mt-3">Add post</a>
+  <a href="{{ route('posts.create') }}" class="btn btn-primary mt-3">Add post</a>
 </div>
 
 

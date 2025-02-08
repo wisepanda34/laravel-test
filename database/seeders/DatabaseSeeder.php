@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         $tags = Tag::factory(50)->create();
         $posts = Post::factory(200)->create();
         foreach ($posts as $post) {
-            $tagsIds = $tags->random(rand(1, 5))->pluck('id');
+            $tagsIds = $tags->random(rand(1, 5))->pluck('id')->unique();
             $post->tags()->attach($tagsIds);
         }
 
@@ -58,15 +58,5 @@ class DatabaseSeeder extends Seeder
         $cupOfCountry->teams()->attach([$liverpool->id, $psg->id]);
         $uefaCup->teams()->attach([$real->id]);
         $leagueOfChampions->teams()->attach([$liverpool->id, $real->id]);
-
-
-
-
-        // User::factory(10)->create();
-
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
     }
 }

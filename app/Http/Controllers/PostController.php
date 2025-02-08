@@ -20,7 +20,7 @@ class PostController extends Controller
         $filter = app()->make(PostFilter::class, ['queryParams' => array_filter($data)]);
 
         $posts = Post::filter($filter)->paginate(10);
-        $categories = Category::all(); // Получаем все категории
+        $categories = Category::all();
 
         return view('post.index', compact('posts', 'categories'));
     }

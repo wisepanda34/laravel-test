@@ -7,8 +7,21 @@ use App\Http\Controllers\LaptopController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\HomeController;
 
-Route::get('/',  [HomeController::class, 'index'])->name('home.index');
+Route::get('/home',  [HomeController::class, 'index'])->name('home.index');
 Route::get('/about',  [AboutController::class, 'index'])->name('about.index');
+
+Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function () {
+  Route::prefix('posts')->namespace('Post')->group(function () {
+    Route::get('/', 'IndexController')->name('admin.posts.index');
+    Route::get('/create', 'CreateController')->name('admin.posts.create');
+    Route::post('/', 'StoreController')->name('admin.posts.store');
+    Route::get('/{post}', 'ShowController')->name('admin.posts.show');
+    Route::get('/{post}/edit', 'EditController')->name('admin.posts.edit');
+    Route::patch('/{post}', 'UpdateController')->name('admin.posts.update');
+    Route::delete('/{post}', 'DestroyController')->name('admin.posts.delete');
+  });
+});
+
 
 Route::group(['namespace' => 'App\Http\Controllers\Team'], function () {
   Route::get('/teams', 'IndexController')->name('teams.index');
@@ -20,13 +33,15 @@ Route::group(['namespace' => 'App\Http\Controllers\Team'], function () {
   Route::delete('/teams/{team}', 'DestroyController')->name('teams.delete');
 });
 
-Route::get('/posts',  [PostController::class, 'index'])->name('post.index');
-Route::get('/posts/create',  [PostController::class, 'create'])->name('post.create');
-Route::post('/posts',  [PostController::class, 'store'])->name('post.store');
-Route::get('/posts/{post}',  [PostController::class, 'show'])->name('post.show');
-Route::get('/posts/{post}/edit',  [PostController::class, 'edit'])->name('post.edit');
-Route::patch('/posts/{post}',  [PostController::class, 'update'])->name('post.update');
-Route::delete('/posts/{post}',  [PostController::class, 'destroy'])->name('post.delete');
+Route::group(['namespace' => 'App\Http\Controllers\Post'], function () {
+  Route::get('/posts',  'IndexController')->name('posts.index');
+  Route::get('/posts/create', 'CreateController')->name('posts.create');
+  Route::post('/posts',  'StoreController')->name('posts.store');
+  Route::get('/posts/{post}',  'ShowController')->name('posts.show');
+  Route::get('/posts/{post}/edit',  'EditController')->name('posts.edit');
+  Route::patch('/posts/{post}',  'UpdateController')->name('posts.update');
+  Route::delete('/posts/{post}',  'DestroyController')->name('posts.delete');
+});
 
 Route::get('/cars',  [CarController::class, 'index'])->name('cars.index');
 Route::get('/cars/deleted_cars',  [CarController::class, 'deleted_cars'])->name('cars.deleted_cars');

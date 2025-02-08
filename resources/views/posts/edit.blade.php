@@ -2,7 +2,7 @@
 
 @section('content')
 
-<form action="{{ route('post.update', $post->id)}}" method="POST">
+<form action="{{ route('posts.update', $post->id)}}" method="POST">
   @csrf
   @method('patch')
   <div class="mb-3">

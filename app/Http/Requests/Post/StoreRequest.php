@@ -29,8 +29,8 @@ class StoreRequest extends FormRequest
             'likes' => 'nullable|integer|min:0',
             'is_published' => 'boolean',
             'category_id' => 'required|exists:categories,id',
-            'achievements' => 'array',
-            'achievements.*' => 'exists:achievements,id',
+            'tags' => 'array',
+            'tags.*' => 'exists:tags,id',
         ];
     }
 }
