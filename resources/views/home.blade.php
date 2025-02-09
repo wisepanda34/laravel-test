@@ -1,19 +1,8 @@
-@extends('layouts.main')
+@extends('layouts.app')
 
 @section('content')
-<div class="container mt-5">
-    <h1 class="text-center">Пример Bootstrap</h1>
-    <button class="btn btn-primary">Кнопка</button>
-</div>
-
-{{-- <div class="container">
-    <h1 class="bg-gradient-custom text-shadow my-class">Home page</h1>
-    <div class="container mt-5">
-    <h1 class="text-center">Пример Bootstrap</h1>
-    <button class="btn btn-primary">Кнопка</button>
-</div> --}}
-
-    {{-- <div class="row justify-content-center">
+<div class="container">
+    <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
@@ -29,6 +18,6 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
 </div>
 @endsection

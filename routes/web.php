@@ -1,16 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PostController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\LaptopController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\HomeController;
 
-Route::get('/home',  [HomeController::class, 'index'])->name('home.index');
+Route::get('/',  [HomeController::class, 'index'])->name('home.index');
+Route::get('/login',  [LoginController::class, 'index'])->name('auth.login');
 Route::get('/about',  [AboutController::class, 'index'])->name('about.index');
 
-Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function () {
+Route::middleware('admin')->prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function () {
   Route::prefix('posts')->namespace('Post')->group(function () {
     Route::get('/', 'IndexController')->name('admin.posts.index');
     Route::get('/create', 'CreateController')->name('admin.posts.create');
@@ -61,3 +62,7 @@ Route::get('/laptops/{laptop}/edit',  [LaptopController::class, 'edit'])->name('
 Route::patch('/laptops/{laptop}',  [LaptopController::class, 'update'])->name('laptops.update');
 Route::delete('/laptops/{laptop}',  [LaptopController::class, 'destroy'])->name('laptops.delete');
 Route::patch('/laptops/{id}/restore', [LaptopController::class, 'restore'])->name('laptops.restore');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
