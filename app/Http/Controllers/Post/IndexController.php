@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Post;
 use App\Http\Requests\Post\FilterRequest;
 use App\Http\Requests\Post\UpdateRequest;
 use App\Http\Filters\PostFilter;
+use App\Models\User;
 use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ class IndexController extends Controller
 {
     public function __invoke(FilterRequest $request)
     {
+        // $this->authorize('view', auth()->);
         $data = $request->validated();
         $filter = app()->make(PostFilter::class, ['queryParams' => array_filter($data)]);
 

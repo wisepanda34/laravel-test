@@ -11,6 +11,8 @@ Route::get('/',  [HomeController::class, 'index'])->name('home.index');
 Route::get('/login',  [LoginController::class, 'index'])->name('auth.login');
 Route::get('/about',  [AboutController::class, 'index'])->name('about.index');
 
+
+
 Route::middleware('admin')->prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function () {
   Route::prefix('posts')->namespace('Post')->group(function () {
     Route::get('/', 'IndexController')->name('admin.posts.index');
@@ -64,5 +66,3 @@ Route::delete('/laptops/{laptop}',  [LaptopController::class, 'destroy'])->name(
 Route::patch('/laptops/{id}/restore', [LaptopController::class, 'restore'])->name('laptops.restore');
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
