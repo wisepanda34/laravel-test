@@ -38,7 +38,8 @@
       crossorigin="anonymous"
     />
     
-    <link rel="stylesheet" href="../../dist/css/adminlte.css" />
+    <link rel="stylesheet" href="{{ asset('dist/css/adminlte.css') }}" />
+
     <!-- apexcharts -->
     <link
       rel="stylesheet"
@@ -53,6 +54,9 @@
       integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4="
       crossorigin="anonymous"
     />
+
+    <!-- Scripts -->
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
   </head>
   
   <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
@@ -275,6 +279,7 @@
                 </ol>
               </div>
             </div>
+            
             @yield('content')
           </div>
         </div>
@@ -310,7 +315,7 @@
       crossorigin="anonymous"
     ></script>
     
-    <script src="../../dist/js/adminlte.js"></script>
+    <script src="{{ asset('dist/css/adminlte.css') }}"></script>
     
     <script>
       const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';

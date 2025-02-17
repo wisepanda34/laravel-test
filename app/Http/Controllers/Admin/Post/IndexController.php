@@ -17,10 +17,16 @@ class IndexController extends BaseController
     public function __invoke(FilterRequest $request)
     {
         $data = $request->validated();
+
+        $page = $data['page'] ?? '1';
+        $perPage = $data['per-page'] ?? '10';
+
         $filter = app()->make(PostFilter::class, ['queryParams' => array_filter($data)]);
 
-        $posts = Post::filter($filter)->paginate(10);
+        // Жадная загрузка данных 
+        $posts = Post::filter($filter)->paginate($perPage, ['*'], 'page', $page);
+        $postsCount = Post::count();
         $categories = Category::all();
-        return view('admin.posts.index', compact('posts', 'categories'));
+        return view('admin.posts.index', compact('posts', 'categories', 'postsCount'));
     }
 }

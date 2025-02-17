@@ -26,6 +26,8 @@ class FilterRequest extends FormRequest
             'category_id' => 'nullable|exists:categories,id',
             'sort_by' => 'nullable|string|in:title,updated_at',
             'sort_order' => 'nullable|string|in:asc,desc',
+            'page' => '',
+            'per_page' => ''
         ];
     }
 }

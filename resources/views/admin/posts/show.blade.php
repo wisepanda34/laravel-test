@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.admin')
 
 @section('content')
 
@@ -9,9 +9,7 @@
 <div>category: {{$categoryTitle}}</div>
 <div> tags:
     @foreach($tags as $tag) 
-     
-    <span style="color:blue;">#{{$tag }}&nbsp;</span>
-   
+      <span style="color:blue;">#{{$tag }}&nbsp;</span>
     @endforeach
 </div>
 

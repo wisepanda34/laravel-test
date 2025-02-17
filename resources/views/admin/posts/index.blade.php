@@ -40,7 +40,7 @@
 
 <!-- Список постов -->
 @foreach($posts as $post)
-<div><a href="{{ route('admin.posts.show', $post->id) }}">{{ $post->id }} | {{ $post->title }} </a></div>
+<div><a href="{{ route('admin.posts.show', $post->id, $posts) }}">{{ $post->id }} | {{ $post->title }} </a></div>
 @endforeach
 
 <!-- Пагинация -->

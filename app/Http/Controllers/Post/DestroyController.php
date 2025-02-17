@@ -12,6 +12,7 @@ class DestroyController extends Controller
 {
     public function __invoke(Post $post)
     {
+        $this->authorize('deletePost', $post);
         $post->delete();
         return redirect()->route('posts.index')->with('success', 'Team deleted successfully!');
     }

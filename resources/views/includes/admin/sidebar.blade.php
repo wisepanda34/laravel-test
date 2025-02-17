@@ -9,7 +9,7 @@
     <li class="nav-item">
       <a href="{{route('admin.posts.index')}}" class="nav-link d-flex justify-content-between">
         <p>Posts</p>
-        <div class="bg-primary rounded d-flex justify-content-center px-1 fs-6">{{$posts->total()}}</div>  
+        <div class="bg-primary rounded d-flex justify-content-center px-1 fs-6">{{$postsCount}}</div>  
       </a>
     </li>
   </ul>

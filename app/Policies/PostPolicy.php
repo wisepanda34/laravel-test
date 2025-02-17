@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\Post;
 use Illuminate\Auth\Access\Response;
 
-class UserPolicy
+class PostPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,11 +19,15 @@ class UserPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Post $post): bool
+    public function editPost(User $user, Post $post): bool
     {
         return $user->role === 'admin' || $user->id === $post->user_id;
     }
 
+    public function deletePost(User $user): bool
+    {
+        return $user->role === 'admin';
+    }
 
     /**
      * Determine whether the user can create models.

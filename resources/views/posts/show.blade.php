@@ -16,12 +16,18 @@
     @endforeach
 </div>
 
-<div class="mt-4"><a href="{{route('posts.edit', $post->id)}}"><strong>Edit post</strong></a></div>
-<form action="{{route('posts.delete', $post->id)}}" method="POST">
-  @csrf
-  @method('delete')
-  <input type="submit" value="Delete" class="btn btn-danger">
-</form>
-<div><a href="{{route('posts.index')}}"><strong>Back to all posts</strong></a></div>
+{{-- @can('editPost', $post)
+  <div class="mt-4"><a href="{{route('posts.edit', $post->id)}}"><strong>Edit post</strong></a></div>
+@endcan
+
+@can('deletePost', $post)
+  <form action="{{route('posts.delete', $post->id)}}" method="POST">
+    @csrf
+    @method('delete')
+    <input type="submit" value="Delete" class="btn btn-danger">
+  </form>
+@endcan --}}
+
+<div class="mt-4"><a href="{{route('posts.index')}}"><strong>Back to all posts</strong></a></div>
 
 @endsection

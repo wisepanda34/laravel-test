@@ -13,11 +13,12 @@ class ShowController extends Controller
 {
     public function __invoke(Post $post)
     {
+        $posts = Post::all();
+        $postsCount = Post::count();
         $post->load('category', 'tags');
         $categoryTitle = $post->category ? $post->category->title : 'Без категории';
         $tags = $post->tags->pluck('title')->toArray();
-        // dd($categoryTitle, $tags);
 
-        return view('admin.posts.show', compact('post', 'categoryTitle', 'tags'));
+        return view('admin.posts.show', compact('postsCount', 'post', 'categoryTitle', 'tags'));
     }
 }
