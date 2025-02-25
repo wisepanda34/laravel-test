@@ -12,7 +12,6 @@ Route::get('/login',  [LoginController::class, 'index'])->name('auth.login');
 Route::get('/about',  [AboutController::class, 'index'])->name('about.index');
 
 
-
 Route::middleware('admin')->prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function () {
   Route::prefix('posts')->namespace('Post')->group(function () {
     Route::get('/', 'IndexController')->name('admin.posts.index');
